@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Billing Pattern Analysis for Therapy Practices | Myers Financial LLC</title>
+  <meta name="description" content="Find the revenue leaks your collection rate can't see. Code-level billing pattern analysis for therapy and mental health practices, with standard and premium report options.">
+  <link rel="canonical" href="https://tmyersfinancial.com/billing-pattern-analysis.html">
+  <meta property="og:title" content="Billing Pattern Analysis for Therapy Practices | Myers Financial LLC">
+  <meta property="og:description" content="Code-level analysis of billing patterns, payer performance, telehealth, and sessions that never became claims.">
+  <meta property="og:url" content="https://tmyersfinancial.com/billing-pattern-analysis.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --green: #1f5c42;
+      --page: #f7f8f7;
+      --text: #17211b;
+      --secondary: #445249;
+      --border: #e5e9e6;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--text);
+      font-family: 'Public Sans', 'Helvetica Neue', sans-serif;
+      line-height: 1.6;
+    }
+
+    a { color: var(--green); }
+
+    .section-container {
+      width: min(100% - 64px, 1180px);
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(8px);
+    }
+
+    .header-inner {
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      display: block;
+    }
+
+    .brand-name {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    nav { display: flex; align-items: center; gap: 28px; }
+
+    nav a {
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    nav a:hover, .footer-links a:hover { color: var(--green); }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: var(--green);
+      color: #fff;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background 150ms ease;
+    }
+
+    .button:hover { background: #17462f; }
+    .header-button { padding: 12px 22px; white-space: nowrap; }
+
+    .hero {
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(160deg, #fcfdfc 0%, #eef4f0 100%);
+    }
+
+    .hero-inner {
+      max-width: 880px;
+      padding-top: 76px;
+      padding-bottom: 76px;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Lora', Georgia, serif;
+      line-height: 1.25;
+    }
+
+    h1 {
+      max-width: 800px;
+      margin: 0 0 22px;
+      font-size: clamp(38px, 5vw, 54px);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+    }
+
+    .hero-subtitle {
+      max-width: 780px;
+      margin: 0;
+      color: var(--secondary);
+      font-size: 19px;
+      line-height: 1.65;
+    }
+
+    main section { padding: 72px 0; }
+    main section.hero { padding: 0; }
+
+    .content-container { max-width: 880px; }
+
+    h2 {
+      margin: 0 0 22px;
+      font-size: clamp(30px, 4vw, 38px);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+    }
+
+    h3 { font-size: 21px; }
+
+    p { margin: 0 0 18px; }
+    p:last-child { margin-bottom: 0; }
+    .secondary { color: var(--secondary); }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fff;
+      padding: 28px 30px;
+    }
+
+    .intro-card { padding: 34px; }
+
+    .leak-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .leak-card {
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--green);
+      padding: 18px 20px;
+      background: #fff;
+      border-radius: 14px;
+    }
+
+    .leak-card p { color: var(--secondary); font-size: 15px; }
+    .leak-card p:last-child { margin: 0; }
+
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .analysis-card h3 { margin: 0 0 10px; font-size: 19px; }
+    .analysis-card p { color: var(--secondary); font-size: 15px; }
+
+    .package-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .package-card h3 { margin: 0 0 4px; }
+
+    .price {
+      margin: 0 0 18px;
+      color: var(--green);
+      font-size: 27px;
+      font-weight: 700;
+    }
+
+    .package-card p { color: var(--secondary); }
+
+    .package-card ul {
+      margin: 0;
+      padding-left: 21px;
+      color: var(--secondary);
+    }
+
+    .package-card li + li { margin-top: 10px; }
+
+    .soft-section { background: #eef4f0; }
+
+    .pricing-card {
+      overflow-x: auto;
+      margin-top: 28px;
+      padding: 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 15px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    thead th {
+      background: #f7faf8;
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    tbody tr:last-child td { border-bottom: 0; }
+    td:not(:first-child), th:not(:first-child) { text-align: center; }
+
+    .included-note {
+      margin-top: 20px;
+      color: var(--secondary);
+      text-align: center;
+    }
+
+    .cta-section {
+      padding: 64px 0;
+      background: #e6f0ea;
+      text-align: center;
+    }
+
+    .cta-section h2 { margin-bottom: 12px; }
+    .cta-section p { margin: 0 0 24px; color: var(--secondary); }
+    .cta-button { padding: 15px 24px; }
+
+    footer {
+      background: #101a14;
+      color: #b9c4bd;
+    }
+
+    .footer-inner { padding-top: 52px; padding-bottom: 28px; }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 34px;
+      border-bottom: 1px solid #26332b;
+    }
+
+    .footer-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      margin-bottom: 14px;
+      padding: 8px 12px;
+      border-radius: 9px;
+      background: #fff;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .footer-brand .brand-mark { width: 30px; height: 30px; }
+    .footer-brand .brand-name { font-size: 17px; }
+    .footer-tagline { margin: 0; font-size: 14.5px; }
+
+    .footer-heading {
+      margin: 0 0 14px;
+      color: #7d8b82;
+      font-size: 12.5px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .footer-links { display: flex; flex-direction: column; gap: 9px; }
+    .footer-links a { color: #b9c4bd; font-size: 14.5px; text-decoration: none; }
+    .copyright { padding-top: 22px; color: #7d8b82; font-size: 13.5px; text-align: center; }
+
+    @media (max-width: 767px) {
+      .section-container { width: min(100% - 32px, 1180px); }
+      .header-inner { min-height: 70px; }
+      .brand-name { font-size: 17px; }
+      nav { gap: 14px; }
+      .header-button { padding: 10px 13px; font-size: 13px; }
+      .hero-inner { padding-top: 54px; padding-bottom: 54px; }
+      .hero-subtitle { font-size: 17px; }
+      main section { padding: 52px 0; }
+      .leak-list, .analysis-grid, .package-grid, .footer-grid { grid-template-columns: 1fr; }
+      .footer-grid { gap: 28px; }
+      .card, .intro-card { padding: 23px; }
+      th, td { padding: 12px 10px; font-size: 13px; }
+      .cta-section { padding: 50px 0; }
+    }
+
+    @media (max-width: 480px) {
+      .header-inner { gap: 12px; }
+      .brand { gap: 8px; }
+      .brand-mark { width: 30px; height: 30px; }
+      .brand-name { font-size: 15px; }
+      nav { gap: 0; }
+      .header-button { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="section-container header-inner">
+      <a class="brand" href="index.html" aria-label="Myers Financial LLC home">
+        <svg class="brand-mark" viewBox="0 0 36 36" aria-hidden="true">
+          <rect x="4" y="19" width="7" height="13" rx="1.5" fill="#1f5c42"></rect>
+          <rect x="14" y="12" width="7" height="20" rx="1.5" fill="#1f5c42"></rect>
+          <rect x="24" y="4" width="7" height="28" rx="1.5" fill="#d9a53a"></rect>
+        </svg>
+        <span class="brand-name">Myers Financial</span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a class="button header-button" href="index.html#contact">Request an Analysis</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="section-container content-container hero-inner">
+        <p class="eyebrow">Myers Financial · Therapy Practice Services</p>
+        <h1>Billing Pattern Analysis</h1>
+      </div>
+    </section>
+
+    <section aria-labelledby="collection-rate-heading">
+      <div class="section-container content-container">
+        <div class="card intro-card">
+          <h2 id="collection-rate-heading">Your collection rate can be excellent while your practice loses money</h2>
+          <p>A 95% collection rate means you collected 95% of what you were owed. It is a real metric and worth tracking.</p>
+          <p>It also cannot see two of the four largest revenue leaks in a therapy practice.</p>
+          <div class="leak-list">
+            <article class="leak-card">
+              <p><strong>Downcoding.</strong> You billed the extended session. The payer paid the standard rate. That is not a denial — the claim processes, the money arrives, and nothing flags it. Your allowed amount just got smaller, and you collected 100% of the smaller number. Your collection rate goes <em>up</em>.</p>
+            </article>
+            <article class="leak-card">
+              <p><strong>Sessions that never became claims.</strong> A completed session sitting in your EHR that was never submitted is in neither the numerator nor the denominator. It never entered the math at all.</p>
+            </article>
+          </div>
+          <p class="secondary" style="margin-top: 24px;">Both are invisible in a deposit-level view. Both compound month over month. Neither shows up in your P&amp;L as anything other than revenue being lower than you expected.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="soft-section" aria-labelledby="analysis-covers-heading">
+      <div class="section-container content-container">
+        <h2 id="analysis-covers-heading">What the analysis covers</h2>
+        <div class="analysis-grid">
+          <article class="card analysis-card">
+            <h3>Code mix and concentration</h3>
+            <p>What share of your sessions is each CPT code, and is any one code carrying more weight than your documentation supports? A 90837 rate above 50% of billed sessions is a flag. A flat distribution — the same code on nearly every encounter — is a different flag, and usually means the code has become a default rather than a reflection of time.</p>
+          </article>
+          <article class="card analysis-card">
+            <h3>Billed versus paid, at the code level</h3>
+            <p>Comparing what you submitted against what the ERA actually paid, code by code. Occasional downcodes are normal. A pattern is a documentation-to-billing gap, and it is quantifiable.</p>
+          </article>
+          <article class="card analysis-card">
+            <h3>Payer-level performance</h3>
+            <p>Denial rate, days to payment, and allowed amounts measured against expected rates — by payer, not in aggregate. One slow payer or one reimbursing below contract can drag an otherwise healthy practice.</p>
+          </article>
+          <article class="card analysis-card">
+            <h3>Revenue separation</h3>
+            <p>Individual, family, and group psychotherapy are separate reimbursement buckets. When 90846, 90847, and 90853 collapse into a single "therapy income" line, a denial pattern affecting only family sessions is impossible to see.</p>
+          </article>
+          <article class="card analysis-card">
+            <h3>Telehealth reconciliation</h3>
+            <p>POS 10 and POS 02 reimburse differently for the same session. If your export doesn't separate them, your telehealth revenue analysis is wrong.</p>
+          </article>
+          <article class="card analysis-card">
+            <h3>Session-to-claim reconciliation</h3>
+            <p>Completed visits compared against submitted claims for the same period. A full schedule is not the same as clean revenue.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="receive-heading">
+      <div class="section-container content-container">
+        <h2 id="receive-heading">What you receive</h2>
+        <div class="package-grid">
+          <article class="card package-card">
+            <h3>Standard</h3>
+            <p class="price">$750</p>
+            <p>A written report covering every area above, with your actual numbers. Findings are quantified in dollars where the data supports it and flagged as patterns where it doesn't. Includes a prioritized list of what to look at first and what each finding would be worth to resolve.</p>
+          </article>
+          <article class="card package-card">
+            <h3>Premium</h3>
+            <p class="price">$1,250</p>
+            <p>Everything in the standard report, plus:</p>
+            <ul>
+              <li>A 60-minute consultation walking through the findings, so you understand not just what was found but how to talk about it with your biller</li>
+              <li>A 30-day follow-up to review what changed after you acted on it</li>
+            </ul>
+            <p style="margin-top: 18px;">The follow-up is where most of the value lands. Findings are easy to read and hard to act on alone.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="soft-section" aria-labelledby="need-heading">
+      <div class="section-container content-container">
+        <h2 id="need-heading">What I need from you</h2>
+        <div class="card">
+          <p>A claims export covering the last 6 to 12 months, including: CPT code, date of service, payer, billed amount, allowed amount, paid amount, and adjustment. Denial and adjustment reason codes where your system provides them.</p>
+          <p>Appointment or session data for the same period, so scheduled volume can be reconciled against billed volume.</p>
+          <p>Most practices on TheraNest, SimplePractice, or TherapyNotes can produce this. If yours can't, I'll tell you before you pay rather than after.</p>
+          <p><strong>Turnaround is one week from receiving usable data.</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="work-ends-heading">
+      <div class="section-container content-container">
+        <h2 id="work-ends-heading">Where my work ends</h2>
+        <div class="card">
+          <p>This is financial analysis. It is not coding advice, not a documentation audit, and not a compliance review.</p>
+          <p>I identify patterns in the money and quantify what they are worth. Specific coding decisions belong with a certified coder, documentation questions belong with your clinical team, and claims corrections belong with your biller. The report tells you what to bring them.</p>
+          <p>That boundary is deliberate and it appears in every deliverable.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="soft-section" aria-labelledby="fit-heading">
+      <div class="section-container content-container">
+        <h2 id="fit-heading">Who this is for</h2>
+        <div class="card">
+          <p>Therapy and mental health private practices that bill insurance. The analysis needs claim volume to produce meaningful patterns, so it works best for group practices with two or more clinicians. Established solo practitioners with consistent insurance volume also qualify.</p>
+          <p>If your practice is primarily private pay, this is not the right engagement — there are no claims to analyze. A standard financial review would serve you better.</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="pricing-heading">
+      <div class="section-container content-container">
+        <h2 id="pricing-heading">Pricing</h2>
+        <div class="card pricing-card">
+          <table>
+            <thead>
+              <tr><th scope="col"></th><th scope="col">Standard</th><th scope="col">Premium</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Written report</th><td>Yes</td><td>Yes</td></tr>
+              <tr><th scope="row">Code mix and concentration analysis</th><td>Yes</td><td>Yes</td></tr>
+              <tr><th scope="row">Billed vs. paid variance by code</th><td>Yes</td><td>Yes</td></tr>
+              <tr><th scope="row">Payer-level performance</th><td>Yes</td><td>Yes</td></tr>
+              <tr><th scope="row">Telehealth POS reconciliation</th><td>Yes</td><td>Yes</td></tr>
+              <tr><th scope="row">Session-to-claim reconciliation</th><td>Yes</td><td>Yes</td></tr>
+              <tr><th scope="row">60-minute consultation</th><td>—</td><td>Yes</td></tr>
+              <tr><th scope="row">30-day follow-up</th><td>—</td><td>Yes</td></tr>
+              <tr><th scope="row"><strong>Price</strong></th><td><strong>$750</strong></td><td><strong>$1,250</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="included-note">Included annually for Full Service bookkeeping clients and quarterly for Premium clients.</p>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="section-container content-container">
+        <h2>Request an analysis</h2>
+        <p>Start with a conversation about your practice and the data you can export.</p>
+        <a class="button cta-button" href="index.html#contact">Request an Analysis</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="section-container footer-inner">
+      <div class="footer-grid">
+        <div>
+          <a class="footer-brand" href="index.html" aria-label="Myers Financial LLC home">
+            <svg class="brand-mark" viewBox="0 0 36 36" aria-hidden="true">
+              <rect x="4" y="19" width="7" height="13" rx="1.5" fill="#1f5c42"></rect>
+              <rect x="14" y="12" width="7" height="20" rx="1.5" fill="#1f5c42"></rect>
+              <rect x="24" y="4" width="7" height="28" rx="1.5" fill="#d9a53a"></rect>
+            </svg>
+            <span class="brand-name">Myers Financial</span>
+          </a>
+          <p class="footer-tagline">Clean Books. Clear Reports. Confident Decisions.</p>
+        </div>
+        <div>
+          <p class="footer-heading">Quick Links</p>
+          <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="index.html#services">Services</a>
+            <a href="index.html#contact">Contact</a>
+          </div>
+        </div>
+        <div>
+          <p class="footer-heading">Contact</p>
+          <div class="footer-links">
+            <a href="mailto:thomas@tmyersfinancial.com">thomas@tmyersfinancial.com</a>
+            <a href="tel:9107058421">(910) 705-8421</a>
+            <span>QuickBooks ProAdvisor · NACPB · Veteran-Owned</span>
+          </div>
+        </div>
+      </div>
+      <div class="copyright">© 2026 Myers Financial, LLC · North Carolina LLC · All rights reserved.</div>
+    </div>
+  </footer>
+</body>
+</html>
